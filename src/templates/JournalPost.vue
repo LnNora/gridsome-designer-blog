@@ -12,7 +12,7 @@
             </div>
             <div class="journal-date">
               <span class="label">Date</span>
-              <div v-text="$page.post.published_at"/>
+              <div v-text="date($page.post.published_at, 'DD MMM , YYYY')"/>
             </div>
             <div class="journal-time">
               <span class="label">Time</span>
@@ -21,7 +21,7 @@
           </div>          
         </div>
 
-        <div v-html="$page.post.content"></div>
+        <div v-html="mdToHtml($page.post.content)"></div>
 
       </div>
     </div>
@@ -43,17 +43,25 @@ query ($id: ID) {
 </page-query>
 
 <script>
-// import JournalContent from "@/components/JournalContent"
-// export default {
-//   components: {
-//     JournalContent
-//   },
-//   metaInfo () {
-//     return {
-//       title: this.$page.post.title
-//     }
-//   }
-// }
+import MarkdownIt from 'markdown-it'
+import dayjs from 'dayjs'
+const md = new MarkdownIt()
+
+export default {
+  metaInfo () {
+    return {
+      title: this.$page.post.title
+    }
+  },
+  methods: {
+    mdToHtml (markdown ) {
+      return md.render(markdown)
+    },
+    date (value, format = 'YYYY-MM-DD HH:mm:ss'){
+      return dayjs(value).format(format)
+    }
+  }
+}
 </script>
 
 <style scoped>

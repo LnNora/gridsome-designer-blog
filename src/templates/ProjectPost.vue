@@ -22,12 +22,12 @@
 
             <div class="year-container">
               <span class="label">Year</span>
-              <div v-html="$page.post.published_at"/>
+              <div v-html="date($page.post.published_at, 'YYYY')"/>
             </div>
           </div>
         </div>
 
-        <div v-html="$page.post.content" class="content" />
+        <div v-html="mdToHtml($page.post.content)" class="content" />
 
       </div>
 
@@ -41,6 +41,8 @@ query ($id: ID) {
     title
     content
     published_at
+    bgColor
+    fgColor
     thumbnail {
       url
     }
@@ -52,16 +54,27 @@ query ($id: ID) {
 </page-query>
 
 <script>
-// export default {
-//   metaInfo () {
-//     return {
-//       title: this.$page.post.title,
-//       bodyAttrs: {
-//         style: `background-color: ${this.$page.post.project_bg_color ? this.$page.post.project_bg_color : 'var(--color-base)'}; color: ${this.$page.post.project_fg_color ? this.$page.post.project_fg_color : 'var(--color-contrast)'}`
-//       }
-//     }
-//   }
-// }
+import dayjs from 'dayjs'
+import MarkdownIt from 'markdown-it'
+const md = new MarkdownIt()
+export default {
+  metaInfo () {
+    return {
+      title: this.$page.post.title,
+      bodyAttrs: {
+        style: `background-color: ${this.$page.post.bgColor ? this.$page.post.bgColor : 'var(--color-base)'}; color: ${this.$page.post.fgColor ? this.$page.post.fgColor : 'var(--color-contrast)'}`
+      }
+    }
+  },
+  methods: {
+    mdToHtml (markdown ) {
+      return md.render(markdown)
+    },
+    date (value, format = 'YYYY-MM-DD HH:mm:ss'){
+      return dayjs(value).format(format)
+    }
+  }
+}
 </script>
 
 <style scoped>
