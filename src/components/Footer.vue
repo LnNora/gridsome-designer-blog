@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
         <div class="container">
-            <!-- <span v-html="settings.footer" /> -->
+            <span>Copyright &copy; 2021</span>
         </div>
     </footer>
 </template>
