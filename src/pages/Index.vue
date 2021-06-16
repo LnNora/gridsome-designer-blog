@@ -49,6 +49,11 @@ import Hero from "@/components/Hero"
 import ProjectsGrid from "@/components/ProjectsGrid"
 import LatestJournals from "@/components/LatestJournals"
 export default {
+  metaInfo () {
+    return {
+      title: 'Blog'
+    }
+  },
   components: {
     Hero,
     ProjectsGrid,

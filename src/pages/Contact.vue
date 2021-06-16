@@ -35,6 +35,11 @@
 <script>
 import axios from 'axios'
 export default {
+  metaInfo () {
+    return {
+      title: 'Contact'
+    }
+  },
   data() {
     return {
       form: {
@@ -48,7 +53,7 @@ export default {
     async onSubmit() {
       const { data } = await axios({
         method: "POST",
-        url: "http://localhost:1337/contacts",
+        url: `${this.GRIDSOME_API_URL}/contacts`,
         data: this.form,
       })
       alert('success')

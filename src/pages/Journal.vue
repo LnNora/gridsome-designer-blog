@@ -39,6 +39,11 @@ query Posts {
 
 <script>
 export default {
+  metaInfo () {
+    return {
+      title: 'Journal'
+    }
+  }
 }
 </script>
 
